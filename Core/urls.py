@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from App.views import TurmodelListCreate
+from App.views import TurmodelListCreate, TurAdminView, TurAdminPK
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -21,7 +21,9 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('tur/', TurmodelListCreate.as_view(), name='turmodel-list-create'),  # Name your path
+    path('get/', TurmodelListCreate.as_view(), name='turmodel-list-create'),
+    path('create/', TurAdminView.as_view()),
+    path('crud/{int:pk}/', TurAdminPK.as_view()),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('swagger.json/', schema_view.without_ui(cache_timeout=0), name='schema-json'),  # Corrected URL for JSON schema
+    path('swagger.json/', schema_view.without_ui(cache_timeout=0), name='schema-json'), 
 ]
